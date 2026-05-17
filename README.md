@@ -79,6 +79,27 @@ PathwayIQ is deployed as a containerized FastAPI application on AWS EC2.
 - Publicly accessible inference endpoint
 
 
+# CI/CD Pipeline
+
+PathwayIQ includes an automated CI/CD workflow for deployment consistency and rapid iteration.
+
+### Workflow Overview
+
+GitHub Push  
+→ GitHub Actions Pipeline  
+→ Docker Image Rebuild  
+→ EC2 Deployment Update  
+→ Live Application Refresh
+
+### CI/CD Features
+
+- Automated deployment workflow
+- Docker-based reproducible builds
+- GitHub Actions integration
+- Deployment automation on code updates
+- Consistent containerized runtime environment
+
+
 
 ## Demo
 
