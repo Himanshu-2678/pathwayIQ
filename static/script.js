@@ -134,7 +134,7 @@ function renderResult(data) {
     document.getElementById('risk-verdict-sub').textContent = isHigh
         ? 'Elevated chance of readmission within 30 days'
         : isMed
-        ? 'Some risk of readmission — monitor closely'
+        ? 'Some risk of readmission - monitor closely'
         : 'Low likelihood of readmission';
 
     // Progress track
@@ -164,10 +164,26 @@ function renderResult(data) {
         setTimeout(() => el.classList.add('in'), 60 * i + 100);
     });
 
-    // Clinical recommendation
-    document.getElementById('result-note').textContent = isHigh
-        ? 'Consider scheduling a follow-up appointment within 7 days of discharge and reviewing the patient\'s care plan before release.'
-        : isMed
-        ? 'Routine follow-up is recommended. Ensure the patient has clear discharge instructions and a confirmed outpatient appointment.'
-        : 'Standard discharge process is appropriate. Provide written care instructions and a regular follow-up schedule.';
-}
+    // Contextual risk insight
+
+    let dynamicNote = '';
+
+    if (isHigh) {
+
+        dynamicNote =
+            'This patient exhibits utilization patterns commonly associated with elevated short-term readmission risk.';
+
+    } else if (isMed) {
+
+        dynamicNote =
+            'Moderate readmission risk detected based on recent encounter and diagnosis history.';
+
+    } else {
+
+        dynamicNote =
+            'Current encounter patterns do not indicate strong short-term readmission risk signals.';
+    }
+
+    document.getElementById('result-note').textContent =
+        dynamicNote;
+    }
