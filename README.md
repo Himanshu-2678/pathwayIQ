@@ -261,17 +261,6 @@ http://127.0.0.1:8000
 ```
 
 
-## Future Improvements
-
-- Live production deployment
-- Scheduled retraining workflows
-- Model registry integration
-- Advanced drift analytics
-- Clinician feedback loops
-- CI/CD for ML pipelines
-
-
-
 ## License
 
 This project is licensed under the MIT License. You are free to use, modify, and distribute this software with proper attribution.
