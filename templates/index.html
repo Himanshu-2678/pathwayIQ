@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathwayIQ — Patient Readmission Risk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <header class="site-header">
+            <div class="wordmark">Pathway<span>IQ</span></div>
+        </header>
+
+        <div class="page-intro">
+            <h1 class="page-title">Will this patient be readmitted<br>within 30 days?</h1>
+            <p class="page-sub">Enter a few clinical details and we'll surface the key risk factors driving the prediction.</p>
+        </div>
+
+        <div class="section-label">Patient details</div>
+
+        <div class="fields">
+            <div class="field">
+                <label for="age">Age group</label>
+                <input type="number" id="age" value="7" min="0" max="9">
+                <span class="hint">0 = youngest · 9 = oldest decade</span>
+            </div>
+            <div class="field">
+                <label for="los">Days in hospital</label>
+                <input type="number" id="los" value="6" min="1" max="30">
+            </div>
+            <div class="field">
+                <label for="inpatient">Prior inpatient visits</label>
+                <input type="number" id="inpatient" value="3" min="0">
+            </div>
+            <div class="field">
+                <label for="emergency">Emergency visits</label>
+                <input type="number" id="emergency" value="1" min="0">
+            </div>
+        </div>
+
+        <div class="fields single">
+            <div class="field">
+                <label for="diagnoses">Number of diagnoses</label>
+                <input type="number" id="diagnoses" value="8" min="1" max="16">
+            </div>
+        </div>
+
+        <button class="run-btn" id="run-btn" onclick="runAnalysis()">
+            Assess readmission risk
+        </button>
+
+
+        <!-- Result -->
+
+        <div class="result-area" id="result-area">
+
+            <div class="divider"></div>
+
+            <div class="risk-display">
+                <div class="risk-number" id="risk-num">—</div>
+                <div class="risk-verdict">
+                    <div class="risk-verdict-label" id="risk-verdict-label">—</div>
+                    <div class="risk-verdict-sub" id="risk-verdict-sub">—</div>
+                </div>
+            </div>
+
+            <div class="track">
+                <div class="track-fill" id="track-fill"></div>
+            </div>
+
+            <div class="factors-label">What's driving this</div>
+            <div id="factors-list"></div>
+
+            <div class="note" id="result-note"></div>
+
+        </div>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
