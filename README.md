@@ -19,25 +19,25 @@ Dataset Link: [UCI-Diabetes 130-US Hospitals for Years 1999-2008](https://archiv
 
 ## Key Features
 
-**Explainable AI Predictions**
+**Explainable AI Predictions**   
 XGBoost-based readmission prediction with SHAP-powered local feature explanations. Top contributing risk factors are returned per prediction.
 
-**End-to-End ML Pipeline**
+**End-to-End ML Pipeline**   
 Covers preprocessing, feature engineering, categorical encoding, imbalance handling, and pipeline serialization.
 
-**FastAPI Backend**
+**FastAPI Backend**   
 REST inference API with input validation, structured prediction responses, and latency tracking.
 
-**Product-Style Frontend**
+**Product-Style Frontend**   
 Clean healthcare-focused UI with real-time risk scoring, visual prediction interface, and risk explanation display.
 
-**Observability and Logging**
+**Observability and Logging**   
 Prediction logging, retraining event logging, request IDs, and inference latency tracking.
 
-**Drift Detection**
+**Drift Detection**   
 Simulated production drift with distribution shift monitoring and threshold-based drift analysis.
 
-**Retraining Pipeline**
+**Retraining Pipeline**   
 Automatic retraining trigger logic, versioned model artifacts, and lifecycle-aware model management.
 
 
