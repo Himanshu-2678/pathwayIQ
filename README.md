@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-**Public Deployment URL:** http://3.109.47.124
+**Public Deployment URL:** http://pathwayiq.duckdns.org
 
 
 PathwayIQ is an end-to-end machine learning system designed to predict 30-day hospital readmission risk for diabetic patients using clinical and encounter-level healthcare data.
