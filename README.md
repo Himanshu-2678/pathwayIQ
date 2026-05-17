@@ -1,5 +1,10 @@
 # PathwayIQ - Explainable Hospital Readmission Intelligence System
 
+## Live Demo
+
+**Public Deployment:** http://3.109.47.124
+
+
 PathwayIQ is an end-to-end machine learning system designed to predict 30-day hospital readmission risk for diabetic patients using clinical and encounter-level healthcare data.
 
 The project goes beyond traditional model training by incorporating explainable AI with SHAP, drift detection and monitoring, automated retraining triggers, versioned ML artifacts, prediction logging and observability, FastAPI inference serving, and a product-style frontend interface. The emphasis is on building a realistic AI system rather than only training a model.
@@ -53,6 +58,27 @@ Automatic retraining trigger logic, versioned model artifacts, and lifecycle-awa
 - Supports end-to-end ML lifecycle workflows from training to monitoring and retraining
 
 
+# Deployment
+
+PathwayIQ is deployed as a containerized FastAPI application on AWS EC2.
+
+### Deployment Stack
+
+- Dockerized inference service
+- Ubuntu EC2 instance hosting
+- FastAPI backend serving predictions
+- Public HTTP endpoint for live access
+- Serialized XGBoost inference pipeline
+- Frontend rendered through FastAPI templates
+
+### Deployment Highlights
+
+- Cross-platform containerized runtime
+- Portable filesystem-safe architecture
+- Production-style API serving
+- Publicly accessible inference endpoint
+
+
 
 ## Demo
 
@@ -76,6 +102,7 @@ Automatic retraining trigger logic, versioned model artifacts, and lifecycle-awa
 | Backend | FastAPI, Pydantic |
 | Frontend | HTML, CSS, JavaScript |
 | Monitoring | Evidently AI, Logging, Model Versioning |
+| Deployment | AWS EC2 |
 
 
 
