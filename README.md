@@ -8,7 +8,7 @@ The project goes beyond traditional model training by incorporating explainable 
 
 ## System Architecture
 
-![Architecture Diagram](assets/architecture.png)
+![Architecture Diagram](assets/pathwayIQ-architecture-diagram.png)
 
 
 ## Problem Statement
