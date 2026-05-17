@@ -234,14 +234,6 @@ http://127.0.0.1:8000
 ```
 
 
-
-## Why This Project Is Different
-
-Most healthcare ML projects stop at notebook experimentation, model accuracy metrics, and static predictions.
-
-PathwayIQ focuses on production-oriented ML engineering, monitoring and lifecycle management, explainability and observability, retraining orchestration, and deployable system design.
-
-
 ## Future Improvements
 
 - Live production deployment
@@ -250,13 +242,6 @@ PathwayIQ focuses on production-oriented ML engineering, monitoring and lifecycl
 - Advanced drift analytics
 - Clinician feedback loops
 - CI/CD for ML pipelines
-
-
-
-## Author
-
-**Himanshu**
-GitHub: [Himanshu-2678](https://github.com/Himanshu-2678)
 
 
 
