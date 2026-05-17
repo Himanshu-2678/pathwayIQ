@@ -123,7 +123,7 @@ GitHub Push
 | Backend | FastAPI, Pydantic |
 | Frontend | HTML, CSS, JavaScript |
 | Monitoring | Evidently AI, Logging, Model Versioning |
-| Deployment | AWS EC2 |
+| Deployment | AWS EC2, CI/CD |
 
 
 
