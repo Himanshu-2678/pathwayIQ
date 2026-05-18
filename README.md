@@ -5,9 +5,9 @@
 **Public Deployment URL:** http://pathwayiq.duckdns.org
 
 
-PathwayIQ is an end-to-end machine learning system designed to predict 30-day hospital readmission risk for diabetic patients using clinical and encounter-level healthcare data.
+PathwayIQ is a reliability-aware clinical decision-support intelligence system designed to estimate calibrated 30-day hospital readmission risk for diabetic patients using explainable machine learning and lifecycle-aware monitoring infrastructure.
 
-The project goes beyond traditional model training by incorporating explainable AI with SHAP, drift detection and monitoring, automated retraining triggers, versioned ML artifacts, prediction logging and observability, FastAPI inference serving, and a product-style frontend interface. The emphasis is on building a realistic AI system rather than only training a model.
+The system combines calibrated XGBoost inference, SHAP-based explainability, drift monitoring, retraining workflows, operational observability, FastAPI deployment, and CI/CD-enabled lifecycle management into a production-oriented healthcare AI pipeline designed to support clinician review - not replace it.
 
 
 
@@ -56,6 +56,18 @@ Automatic retraining trigger logic, versioned model artifacts, and lifecycle-awa
 - Automatically triggers retraining workflows when drift thresholds are exceeded
 - Maintains versioned ML model artifacts for lifecycle traceability
 - Supports end-to-end ML lifecycle workflows from training to monitoring and retraining
+
+
+## Reliability-Oriented Design Principles
+
+PathwayIQ was designed around reliability-aware healthcare AI principles:
+- calibrated probability estimation,
+- explainable prediction reasoning,
+- operational monitoring,
+- drift-aware lifecycle management,
+- clinician-facing decision support.
+
+The system prioritizes trustworthy risk estimation over raw classification confidence.
 
 
 # Deployment
@@ -123,15 +135,15 @@ GitHub Push
 | Backend | FastAPI, Pydantic |
 | Frontend | HTML, CSS, JavaScript |
 | Monitoring | Evidently AI, Logging, Model Versioning |
-| Deployment | AWS EC2, CI/CD |
+| Deployment & Infra | Docker, AWS EC2, GitHub Actions, CI/CD |
 
 
 
 ## Machine Learning Pipeline
 
-The ML pipeline includes missing value imputation, categorical encoding, numerical scaling, class imbalance handling, XGBoost classification, and probability calibration through threshold tuning.
+The ML pipeline includes missing value imputation, categorical encoding, numerical scaling, class imbalance handling, calibrated XGBoost classification, and post-hoc probability calibration using isotonic regression.
 
-The final model was optimized for recall improvement, healthcare interpretability, and deployment realism.
+The final system was optimized for calibrated risk estimation, healthcare interpretability, and deployment-oriented reliability.
 
 
 ## Model Performance
@@ -145,11 +157,47 @@ The final model was optimized for recall improvement, healthcare interpretabilit
 | F1 Score | ~0.28 |
 | Monitoring Coverage | 4 critical clinical drift features |
 | Retraining Strategy | Threshold-triggered retraining |
+| Calibration Method | Isotonic Regression |
+
+
+## Probability Calibration
+
+Most healthcare ML systems optimize ranking metrics such as ROC-AUC but return poorly calibrated probabilities. PathwayIQ applies isotonic regression calibration to align predicted readmission likelihood with observed clinical outcomes.
+
+This improves probability reliability for operational risk stratification workflows.
+
+### Calibration Improvements
+
+| Metric | Raw XGBoost | Calibrated |
+|---|---|---|
+| ROC-AUC | 0.6902 | 0.6932 |
+| Brier Score | 0.2163 | 0.0931 |
+
+![Calibration Curve](assets/calibration_curve.png)  
+
+
+## Clinical Risk Stratification
+
+Calibrated probabilities are grouped into operational risk bands to support intervention prioritization workflows.
+
+| Risk Band | Interpretation |
+|---|---|
+| Low Risk | Standard follow-up |
+| Moderate Risk | Additional discharge review |
+| High Risk | Escalated clinician review recommended |
 
 
 ## Explainability Layer
 
-PathwayIQ integrates SHAP explainability to provide patient-level explanations, local prediction reasoning, and top contributing risk factors. Example factors include previous inpatient visits, emergency visit frequency, heart failure diagnosis, and discharge disposition patterns. This improves model transparency for healthcare decision support.
+PathwayIQ surfaces local feature-level explanations for each prediction, including factors such as prior inpatient visits, emergency visit frequency, diagnosis complexity, and hospital stay duration.
+
+These explanations are intended to support clinician review by improving transparency around model behavior.
+
+### Explainability Limitations
+
+SHAP explanations may become unstable under correlated clinical variables and should be interpreted as supportive reasoning signals rather than causal medical explanations.
+
+PathwayIQ surfaces explanations to assist clinician review, not replace clinical judgment.
 
 
 ## Monitoring and Drift Detection
@@ -177,7 +225,23 @@ models/
     └── ...
 ```
 
----
+
+## Known Limitations
+
+- Dataset represents historical diabetic encounters and may not generalize across healthcare systems.
+- Calibration evaluation currently uses a limited holdout strategy.
+- SHAP explanations may vary under correlated feature conditions.
+- The system is not intended for autonomous clinical decision-making.
+
+
+## Future Improvements
+
+- Prospective holdout calibration evaluation
+- Subgroup-level calibration consistency analysis
+- MLflow-based model registry integration
+- Scheduled drift benchmarking pipelines
+- Clinician feedback-assisted review workflows
+- Automated CI/CD for retraining lifecycle management
 
 ## Project Structure
 
