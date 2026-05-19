@@ -70,7 +70,7 @@ PathwayIQ was designed around reliability-aware healthcare AI principles:
 The system prioritizes trustworthy risk estimation over raw classification confidence.
 
 
-## Deployment
+# Deployment
 
 PathwayIQ is deployed as a containerized FastAPI application on AWS EC2.
 
@@ -91,7 +91,8 @@ PathwayIQ is deployed as a containerized FastAPI application on AWS EC2.
 - Publicly accessible inference endpoint
 
 
-## CI/CD Pipeline
+
+# CI/CD Pipeline
 
 PathwayIQ includes an automated CI/CD workflow for deployment consistency and rapid iteration.
 
