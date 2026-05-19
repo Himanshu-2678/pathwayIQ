@@ -11,14 +11,21 @@ import joblib
 import shap
 import numpy as np
 from src.predict import clean_feature_name
+from src.thresholding import assign_risk_band
 
 import logging
 import uuid
 import time
 from datetime import datetime
 
+from src.calibration_utils import load_calibrated_model
+
 ## Load model
+# Raw pipeline for SHAP explainability
 model = joblib.load("models/xgb_readmission_pipeline.pkl")
+
+# Calibrated pipeline for probability inference
+calibrated_model = load_calibrated_model()
 
 xgb_model = model.named_steps["classifier"]
 
@@ -125,9 +132,8 @@ def predict(data: PatientData):
     # PREDICTION
     # =========================================
 
-    probability = model.predict_proba(input_df)[0][1]
-
-    prediction = int(probability >= 0.14)
+    probability = calibrated_model.predict_proba(input_df)[0][1]
+    risk_label = assign_risk_band(probability)
 
     # =========================================
     # TRANSFORM INPUT
@@ -183,7 +189,7 @@ def predict(data: PatientData):
         "timestamp": datetime.utcnow().isoformat(),
         "request_id": request_id,
         "risk_score": round(float(probability), 4),
-        "risk_label": "high" if prediction == 1 else "low",
+        "risk_label": risk_label,
         "latency_ms": latency_ms
     }
 
@@ -192,7 +198,7 @@ def predict(data: PatientData):
     return {
         "request_id": request_id,
         "risk_score": round(float(probability), 4),
-        "risk_label": "high" if prediction == 1 else "low",
+        "risk_label": risk_label,
         "latency_ms": latency_ms,
         "top_risk_factors": top_factors
-    }
+    }   
