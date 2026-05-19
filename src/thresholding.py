@@ -1,12 +1,13 @@
-def assign_risk_band(prob):
-    """
-    Clinical risk stratification policy using calibrated probabilities.
-    """
+LOW_RISK_THRESHOLD = 0.30
+HIGH_RISK_THRESHOLD = 0.70
 
-    if prob < 0.15:
+
+def categorize_risk(probability: float) -> str:
+
+    if probability < LOW_RISK_THRESHOLD:
         return "Low Risk"
 
-    elif prob < 0.30:
+    elif probability < HIGH_RISK_THRESHOLD:
         return "Moderate Risk"
 
     return "High Risk"

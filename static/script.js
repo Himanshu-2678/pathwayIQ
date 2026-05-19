@@ -104,13 +104,17 @@ function localScore(p) {
 
     const label = s >= 0.5 ? 'High risk' : s >= 0.3 ? 'Moderate risk' : 'Low risk';
 
-    return { risk_score: s, risk_label: label, top_risk_factors: factors };
+    return {
+        readmission_probability: s,
+        risk_label: label,
+        top_risk_factors: factors
+    };
 }
 
 
 function renderResult(data) {
 
-    const pct    = Math.round(data.risk_score * 100);
+    const pct = Math.round(data.readmission_probability * 100);
     const isHigh = pct >= 50;
     const isMed  = pct >= 30 && pct < 50;
     const tier   = isHigh ? 'high' : isMed ? 'medium' : 'low';

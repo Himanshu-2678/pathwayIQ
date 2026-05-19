@@ -760,6 +760,35 @@ body {
 
 .action-note:empty { display: none; }
 
+.clinical-disclaimer {
+    margin-top: 14px;
+    padding: 14px 16px;
+
+    background: #f7f7f4;
+
+    border-left: 3px solid #5a8a6a;
+    border-radius: 8px;
+
+    font-size: 12.5px;
+    line-height: 1.7;
+
+    color: #6a6a62;
+}
+
+.xai-limitations {
+    margin-top: 12px;
+    padding: 14px 16px;
+
+    background: #faf8f2;
+
+    border-left: 3px solid #b8821a;
+    border-radius: 8px;
+
+    font-size: 12.5px;
+    line-height: 1.7;
+
+    color: #746b58;
+}
 
 /* Footer */
 
