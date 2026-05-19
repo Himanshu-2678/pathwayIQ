@@ -24,7 +24,7 @@ Dataset Link: [UCI-Diabetes 130-US Hospitals for Years 1999-2008](https://archiv
 
 ## Key Features
 
-**Explainable AI Predictions**   
+**Explainable Clinical Risk Predictions**   
 XGBoost-based readmission prediction with SHAP-powered local feature explanations. Top contributing risk factors are returned per prediction.
 
 **End-to-End ML Pipeline**   
@@ -90,6 +90,34 @@ PathwayIQ is deployed as a containerized FastAPI application on AWS EC2.
 - Production-style API serving
 - Publicly accessible inference endpoint
 
+
+## Health Monitoring Endpoint
+
+PathwayIQ exposes a lightweight operational health-check endpoint for deployment verification and monitoring workflows.
+
+### Endpoint
+
+```bash
+GET /health
+```
+
+### Example Response
+
+```json
+{
+  "status": "healthy",
+  "model_loaded": true,
+  "service": "PathwayIQ",
+  "version": "1.0.0"
+}
+```
+
+The endpoint validates:
+- API service availability
+- model loading status
+- deployment readiness
+
+This supports production-style debugging and infrastructure monitoring workflows.
 
 
 # CI/CD Pipeline
@@ -188,6 +216,17 @@ Calibrated probabilities are grouped into operational risk bands to support inte
 | High Risk | Escalated clinician review recommended |
 
 
+### Threshold Rationale
+
+PathwayIQ groups calibrated prediction probabilities into operational risk bands to support discharge prioritization workflows.
+
+The thresholds were intentionally selected to favor higher recall for elevated-risk patients, since missed readmission cases may lead to delayed interventions and poor discharge outcomes.
+
+The moderate-risk category acts as an intermediate review zone where additional clinical context may be considered before intervention decisions.
+
+Because PathwayIQ uses calibrated probabilities, threshold boundaries become more interpretable for downstream clinical decision-support workflows.
+
+
 ## Explainability Layer
 
 PathwayIQ surfaces local feature-level explanations for each prediction, including factors such as prior inpatient visits, emergency visit frequency, diagnosis complexity, and hospital stay duration.
@@ -199,6 +238,15 @@ These explanations are intended to support clinician review by improving transpa
 SHAP explanations may become unstable under correlated clinical variables and should be interpreted as supportive reasoning signals rather than causal medical explanations.
 
 PathwayIQ surfaces explanations to assist clinician review, not replace clinical judgment.
+
+
+## Human-in-the-Loop Workflow
+
+PathwayIQ is designed as a clinician-support system rather than an autonomous medical decision-maker.
+
+Predictions, calibrated probabilities, and SHAP-based explanations are intended to assist discharge planning and intervention prioritization workflows while keeping physicians responsible for final clinical decisions.
+
+The system emphasizes transparency and operational support rather than automated medical judgment.
 
 
 ## Monitoring and Drift Detection
@@ -242,11 +290,10 @@ models/
 - MLflow-based model registry integration
 - Scheduled drift benchmarking pipelines
 - Clinician feedback-assisted review workflows
-- Automated CI/CD for retraining lifecycle management
+
 
 ## Project Structure
 
-```
 pathwayIQ/
 │
 ├── api/
@@ -263,24 +310,46 @@ pathwayIQ/
 │   └── retrain.py
 │
 ├── models/
+│   ├── calibrated_model.pkl
+│   ├── xgb_readmission_pipeline.pkl
 │   └── versions/
+│       ├── xgb_model_v1.pkl
+│       ├── xgb_model_v2.pkl
+│       └── ...
 │
 ├── logs/
+│   └── predictions.log
 │
 ├── src/
 │   ├── train.py
 │   ├── predict.py
-│   └── preprocess.py
+│   ├── preprocess.py
+│   ├── thresholding.py
+│   └── calibration_utils.py
 │
 ├── static/
 │   ├── style.css
-│   └── script.js
+│   ├── script.js
+│   ├── calibration_curve.png
+│   ├── apple-touch-icon.png
+│   ├── favicon-32x32.png
+│   ├── favicon-16x16.png
+│   └── favicon.ico
 │
 ├── templates/
 │   └── index.html
 │
-└── requirements.txt
-```
+├── assets/
+│   ├── pathwayIQ-architecture-diagram.png
+│   ├── calibration_curve.png
+│   ├── ss1.png
+│   └── ss2.png
+│
+├── requirements.txt
+├── Dockerfile
+├── .dockerignore
+├── .gitignore
+└── README.md
 
 ---
 
@@ -293,8 +362,14 @@ pathwayIQ/
 ```json
 {
   "request_id": "a1b2c3",
-  "risk_score": 0.6622,
+  "readmission_probability": 0.6622,
   "risk_label": "high",
+
+  "thresholds": {
+    "low_risk_max": 0.30,
+    "moderate_risk_max": 0.70
+  },
+
   "latency_ms": 148.2,
   "top_risk_factors": [
     {
