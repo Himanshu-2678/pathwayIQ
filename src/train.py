@@ -17,7 +17,7 @@ from xgboost import XGBClassifier
 
 print("Loading dataset...")
 
-df = pd.read_csv("dataset/processed/cleaned_diabetic_data.csv")
+df = pd.read_csv(r"dataset\processed\cleaned_diabetic_data.csv")
 
 X = df.drop(columns=["target"])
 y = df["target"]
@@ -45,8 +45,8 @@ print("Train-test split completed.")
 # =========================================
 
 categorical_cols = X_train.select_dtypes(
-    include="object"
-).columns.tolist()
+    include=["object", "string"]
+).columns
 
 numerical_cols = X_train.select_dtypes(
     exclude="object"
@@ -142,6 +142,6 @@ print(f"ROC-AUC Score: {roc_auc:.4f}")
 # SAVE MODEL
 # =========================================
 
-joblib.dump(model_pipeline, "models\xgb_readmission_pipeline.pkl")
+joblib.dump(model_pipeline, r"models\xgb_readmission_pipeline.pkl")
 
 print("\nModel saved successfully.")
