@@ -12,7 +12,6 @@ async function runAnalysis() {
         number_emergency: parseInt(document.getElementById('emergency').value) || 1,
         number_diagnoses: parseInt(document.getElementById('diagnoses').value) || 8,
 
-        // Placeholder clinical values
         num_lab_procedures: 45,
         num_procedures:     1,
         num_medications:    18,
@@ -68,7 +67,6 @@ async function runAnalysis() {
         data = await res.json();
 
     } catch (err) {
-        // Fallback: local score simulation when backend is unavailable
         data = localScore(payload);
     }
 
@@ -87,9 +85,9 @@ function localScore(p) {
     s += p.number_diagnoses * 0.012;
     s += (p.time_in_hospital - 3) * 0.015;
     s += p.age * 0.008;
-    s += 0.07; // insulin escalation
-    s += 0.05; // uncontrolled HbA1c
-    s += 0.04; // medication change
+    s += 0.07;
+    s += 0.05;
+    s += 0.04;
     s = Math.min(Math.max(s, 0.05), 0.96);
 
     const factors = [
@@ -112,37 +110,28 @@ function localScore(p) {
 
 function renderResult(data) {
 
-    const pct   = Math.round(data.risk_score * 100);
+    const pct    = Math.round(data.risk_score * 100);
     const isHigh = pct >= 50;
     const isMed  = pct >= 30 && pct < 50;
     const tier   = isHigh ? 'high' : isMed ? 'medium' : 'low';
 
-    // Show result area
     document.getElementById('result-area').classList.add('visible');
 
-    // Risk number
     const numEl = document.getElementById('risk-num');
     numEl.textContent = pct + '%';
     numEl.className = 'risk-number ' + tier;
 
-    // Verdict label
     const verdictLabel = document.getElementById('risk-verdict-label');
     verdictLabel.textContent = isHigh ? 'High risk' : isMed ? 'Moderate risk' : 'Low risk';
     verdictLabel.className = 'risk-verdict-label ' + tier;
 
-    // Verdict sub
-    document.getElementById('risk-verdict-sub').textContent = isHigh
-        ? 'Elevated chance of readmission within 30 days'
-        : isMed
-        ? 'Some risk of readmission - monitor closely'
-        : 'Low likelihood of readmission';
+    document.getElementById('risk-verdict-sub').textContent =
+        'Estimated calibrated readmission likelihood: ' + pct + '%';
 
-    // Progress track
     const fill = document.getElementById('track-fill');
     fill.className = 'track-fill ' + tier;
     setTimeout(() => fill.style.width = pct + '%', 50);
 
-    // Risk factors
     const list = document.getElementById('factors-list');
     list.innerHTML = '';
 
@@ -160,30 +149,27 @@ function renderResult(data) {
         `;
 
         list.appendChild(el);
-
         setTimeout(() => el.classList.add('in'), 60 * i + 100);
     });
-
-    // Contextual risk insight
 
     let dynamicNote = '';
 
     if (isHigh) {
-
-        dynamicNote =
-            'This patient exhibits utilization patterns commonly associated with elevated short-term readmission risk.';
-
+        dynamicNote = 'This patient exhibits utilization patterns commonly associated with elevated short-term readmission risk.';
     } else if (isMed) {
-
-        dynamicNote =
-            'Moderate readmission risk detected based on recent encounter and diagnosis history.';
-
+        dynamicNote = 'Moderate readmission risk detected based on recent encounter and diagnosis history.';
     } else {
-
-        dynamicNote =
-            'Current encounter patterns do not indicate strong short-term readmission risk signals.';
+        dynamicNote = 'Current encounter patterns do not indicate strong short-term readmission risk signals.';
     }
 
-    document.getElementById('result-note').textContent =
-        dynamicNote;
+    document.getElementById('result-note').textContent = dynamicNote;
+
+    const actionNote = document.getElementById('action-note');
+    if (isHigh) {
+        actionNote.textContent = 'Recommended action: Clinician follow-up review suggested before discharge. Consider care coordination referral.';
+    } else if (isMed) {
+        actionNote.textContent = 'Recommended action: Monitor closely. A brief structured follow-up call within 7 days may be appropriate.';
+    } else {
+        actionNote.textContent = 'Recommended action: Standard discharge protocol. Routine outpatient follow-up as scheduled.';
     }
+}
