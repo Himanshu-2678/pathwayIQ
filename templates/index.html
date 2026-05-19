@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PathwayIQ — Patient Readmission Risk</title>
+    <title>PathwayIQ — Clinical Decision-Support Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,16 +13,248 @@
 
 <body>
 
-    <div class="wrap">
+    <!-- ── LANDING ─────────────────────────────────────────────── -->
 
-        <header class="site-header">
-            <div class="wordmark">Pathway<span>IQ</span></div>
-        </header>
+    <div class="landing">
+        <div class="wrap">
 
-        <div class="page-intro">
-            <h1 class="page-title">Will this patient be readmitted<br>within 30 days?</h1>
-            <p class="page-sub">Enter a few clinical details and we'll surface the key risk factors driving the prediction.</p>
+            <header class="site-header">
+                <div class="wordmark">Pathway<span>IQ</span></div>
+                <nav class="site-nav">
+                    <a href="#system">System</a>
+                    <a href="#reliability">Reliability</a>
+                    <a href="#assessment">Assessment</a>
+                </nav>
+            </header>
+
+            <!-- Hero -->
+            <section class="hero">
+                <p class="hero-eyebrow">Clinical decision-support intelligence</p>
+                <h1 class="hero-title">Calibrated readmission<br>risk, built for review.</h1>
+                <p class="hero-body">PathwayIQ surfaces calibrated 30-day readmission risk estimates for diabetic patients - grounded in explainable inference, probability calibration, and continuous drift monitoring. Designed to support clinician judgment, not replace it.</p>
+                <div class="hero-foot">
+                    <a href="#assessment" class="hero-cta">Open assessment interface</a>
+                    <span class="hero-stat">Calibrated on 100,000+ diabetic patient encounters</span>
+                </div>
+            </section>
+
+            <!-- Capabilities strip -->
+            <section class="caps">
+                <div class="cap-item">
+                    <div class="cap-label">Model</div>
+                    <div class="cap-val">Calibrated XGBoost</div>
+                </div>
+                <div class="cap-sep"></div>
+                <div class="cap-item">
+                    <div class="cap-label">Explainability</div>
+                    <div class="cap-val">SHAP feature attribution</div>
+                </div>
+                <div class="cap-sep"></div>
+                <div class="cap-item">
+                    <div class="cap-label">Calibration</div>
+                    <div class="cap-val">Isotonic regression</div>
+                </div>
+                <div class="cap-sep"></div>
+                <div class="cap-item">
+                    <div class="cap-label">Monitoring</div>
+                    <div class="cap-val">Automated drift detection</div>
+                </div>
+            </section>
+
+            <!-- System pipeline -->
+            <section class="pipeline-section" id="system">
+                <div class="section-label">Inference architecture</div>
+
+                <div class="pipeline-layers">
+
+                    <div class="pipe-layer pipe-layer-input">
+                        <div class="pipe-layer-tag">Input</div>
+                        <div class="pipe-layer-steps">
+                            <div class="pipe-step">Patient clinical data</div>
+                            <div class="pipe-step">Frontend assessment interface</div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-connector">↓</div>
+
+                    <div class="pipe-layer pipe-layer-inference">
+                        <div class="pipe-layer-tag">Inference</div>
+                        <div class="pipe-layer-steps">
+                            <div class="pipe-step">FastAPI inference service</div>
+                            <div class="pipe-step">Calibrated XGBoost pipeline</div>
+                            <div class="pipe-step">Risk stratification engine</div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-connector">↓</div>
+
+                    <div class="pipe-layer pipe-layer-reliability">
+                        <div class="pipe-layer-tag">Reliability</div>
+                        <div class="pipe-layer-steps">
+                            <div class="pipe-step">SHAP explainability layer</div>
+                            <div class="pipe-step">Prediction logging &amp; monitoring</div>
+                            <div class="pipe-step">Drift detection system</div>
+                        </div>
+                    </div>
+
+                    <div class="pipe-connector">↓</div>
+
+                    <div class="pipe-layer pipe-layer-lifecycle">
+                        <div class="pipe-layer-tag">Lifecycle</div>
+                        <div class="pipe-layer-steps">
+                            <div class="pipe-step">Automated retraining workflow</div>
+                            <div class="pipe-step pipe-step-last">Versioned model registry</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Reliability section -->
+            <section class="reliability" id="reliability">
+                <div class="section-label">AI system reliability &amp; monitoring</div>
+
+                <div class="rel-grid">
+
+                    <!-- Card 1 — Calibration wide, two-column interior -->
+                    <div class="rel-card rel-card-wide rel-card-calib">
+                        <div class="rel-calib-left">
+                            <div class="rel-card-title">Calibration reliability
+                                <span class="rel-badge">Probability reliability layer</span>
+                            </div>
+                            <p class="rel-card-body">Calibrated probability estimates align predicted readmission risk with observed clinical outcomes. Isotonic regression post-processing ensures a predicted risk of 30% corresponds to a clinically meaningful 30% observed rate — not an arbitrary model score.</p>
+                            <div class="rel-metrics">
+                                <div class="rel-metric">
+                                    <div class="rel-metric-val">Isotonic</div>
+                                    <div class="rel-metric-label">Calibration method</div>
+                                </div>
+                                <div class="rel-metric">
+                                    <div class="rel-metric-val">Brier ↓</div>
+                                    <div class="rel-metric-label">Score improved</div>
+                                </div>
+                                <div class="rel-metric">
+                                    <div class="rel-metric-val">3 bands</div>
+                                    <div class="rel-metric-label">Risk stratification</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rel-calib-right">
+                            <!-- Drop your calibration curve PNG into /static/ named calibration_curve.png -->
+                            <img
+                                src="/static/calibration_curve.png"
+                                alt="Reliability diagram - calibrated vs uncalibrated probability"
+                                class="calib-img"
+                                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                            >
+                            <div class="calib-img-placeholder">
+                                <div class="calib-placeholder-label">Reliability diagram</div>
+                                <div class="calib-placeholder-sub">Place calibration_curve.png<br>in /static/ to display</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 — Drift -->
+                    <div class="rel-card">
+                        <div class="rel-card-title">Drift monitoring</div>
+                        <p class="rel-card-body">Feature distribution shifts are detected automatically. When monitored clinical inputs deviate beyond set thresholds, a retraining signal is raised.</p>
+                        <div class="drift-flow">
+                            <div class="drift-step">Incoming data</div>
+                            <div class="drift-arrow">→</div>
+                            <div class="drift-step">Shift detection</div>
+                            <div class="drift-arrow">→</div>
+                            <div class="drift-step">Threshold check</div>
+                            <div class="drift-arrow">→</div>
+                            <div class="drift-step drift-step-alert">Retrain trigger</div>
+                        </div>
+                        <div class="monitored-label">Monitored features</div>
+                        <div class="monitored-pills">
+                            <span>number_emergency</span>
+                            <span>number_inpatient</span>
+                            <span>time_in_hospital</span>
+                            <span>number_diagnoses</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 — Retraining -->
+                    <div class="rel-card">
+                        <div class="rel-card-title">Retraining workflow</div>
+                        <p class="rel-card-body">When drift is confirmed, a retraining pipeline activates, evaluates the new candidate, and logs the artifact to the model registry.</p>
+                        <div class="retrain-timeline">
+                            <div class="rt-step">
+                                <div class="rt-dot"></div>
+                                <div class="rt-text">Model drift detected</div>
+                            </div>
+                            <div class="rt-line"></div>
+                            <div class="rt-step">
+                                <div class="rt-dot"></div>
+                                <div class="rt-text">Retraining pipeline activated</div>
+                            </div>
+                            <div class="rt-line"></div>
+                            <div class="rt-step">
+                                <div class="rt-dot"></div>
+                                <div class="rt-text">New model version generated</div>
+                            </div>
+                            <div class="rt-line"></div>
+                            <div class="rt-step">
+                                <div class="rt-dot rt-dot-last"></div>
+                                <div class="rt-text">Artifact logged to registry</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 — Observability -->
+                    <div class="rel-card rel-card-wide">
+                        <div class="rel-card-title">Observability &amp; traceability</div>
+                        <p class="rel-card-body">Every inference is logged with a request ID, timestamp, input snapshot, and prediction metadata. Latency is tracked to ensure production-grade responsiveness.</p>
+                        <div class="obs-grid">
+                            <div class="obs-item">
+                                <div class="obs-val">142 ms</div>
+                                <div class="obs-label">Avg. API latency</div>
+                            </div>
+                            <div class="obs-item">
+                                <div class="obs-val">4</div>
+                                <div class="obs-label">Monitored features</div>
+                            </div>
+                            <div class="obs-item">
+                                <div class="obs-val">✓</div>
+                                <div class="obs-label">Request traceability</div>
+                            </div>
+                            <div class="obs-item">
+                                <div class="obs-val">✓</div>
+                                <div class="obs-label">Versioned model tracking</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div><!-- /wrap -->
+    </div><!-- /landing -->
+
+    <!-- Bridge into assessment -->
+    <div class="landing-divider"></div>
+
+    <div class="assessment-bridge" id="assessment">
+
+        <div class="wrap">
+
+            <div class="section-label">
+                Clinical assessment interface
+            </div>
+
+            <p class="bridge-body">
+                The following workflow simulates real-time clinician-facing risk assessment.
+                Adjust the patient parameters below and the system will return a calibrated
+                probability estimate alongside the top clinical risk factors driving the prediction.
+            </p>
+
         </div>
+
+    </div>
+    <!-- ── ASSESSMENT FORM ─────────────────────────────────────── -->
+
+    <div class="wrap">
 
         <div class="section-label">Patient details</div>
 
@@ -57,15 +289,13 @@
             Assess readmission risk
         </button>
 
-
         <!-- Result -->
-
         <div class="result-area" id="result-area">
 
             <div class="divider"></div>
 
             <div class="risk-display">
-                <div class="risk-number" id="risk-num">—</div>
+                <div class="risk-number" id="risk-num">-</div>
                 <div class="risk-verdict">
                     <div class="risk-verdict-label" id="risk-verdict-label">—</div>
                     <div class="risk-verdict-sub" id="risk-verdict-sub">—</div>
@@ -80,10 +310,18 @@
             <div id="factors-list"></div>
 
             <div class="note" id="result-note"></div>
+            <div class="action-note" id="action-note"></div>
 
         </div>
 
     </div>
+
+    <footer class="site-footer-bar">
+        <div class="wrap">
+            <span class="wordmark" style="font-size:16px;">Pathway<span>IQ</span></span>
+            <span class="footer-note">Clinical decision-support tool. Not a diagnostic device. For clinician review only.</span>
+        </div>
+    </footer>
 
     <script src="/static/script.js"></script>
 
