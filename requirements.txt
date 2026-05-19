@@ -9,3 +9,4 @@ joblib
 pydantic
 jinja2
 python-multipart
+matplotlib
