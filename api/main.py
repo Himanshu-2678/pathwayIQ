@@ -11,7 +11,7 @@ import joblib
 import shap
 import numpy as np
 from src.predict import clean_feature_name
-from src.thresholding import assign_risk_band
+from src.thresholding import categorize_risk
 
 import logging
 import uuid
@@ -35,8 +35,24 @@ print("Model loaded successfully")
 
 
 app = FastAPI(
-    title="PathwayIQ Readmission API"
+    title="PathwayIQ Readmission API",
+    description="Explainable hospital readmission risk prediction system with monitoring and calibrated inference.",
+    version="1.0.0"
 )
+
+@app.get("/health")
+def health_check():
+
+    model_status = model is not None
+
+    return {
+        "status": "healthy" if model_status else "degraded",
+        "timestamp": datetime.utcnow().isoformat(),
+        "model_loaded": model_status,
+        "service": "PathwayIQ",
+        "version": "1.0.0"
+    }
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
@@ -133,7 +149,10 @@ def predict(data: PatientData):
     # =========================================
 
     probability = calibrated_model.predict_proba(input_df)[0][1]
-    risk_label = assign_risk_band(probability)
+    risk_label = categorize_risk(probability)
+
+    print("Probability:", probability)
+    print("Is NaN:", np.isnan(probability))
 
     # =========================================
     # TRANSFORM INPUT
@@ -188,17 +207,26 @@ def predict(data: PatientData):
     log_data = {
         "timestamp": datetime.utcnow().isoformat(),
         "request_id": request_id,
-        "risk_score": round(float(probability), 4),
+        "readmission_probability": round(float(probability), 4),
         "risk_label": risk_label,
         "latency_ms": latency_ms
     }
 
     logger.info(log_data)
 
+    print("Returned Probability:", round(float(probability), 4))
+    print("Returned Risk Label:", risk_label)
+
     return {
         "request_id": request_id,
-        "risk_score": round(float(probability), 4),
+        "readmission_probability": round(float(probability), 4),
         "risk_label": risk_label,
+
+        "thresholds": {
+            "low_risk_max": 0.30,
+            "moderate_risk_max": 0.70
+        },
+
         "latency_ms": latency_ms,
         "top_risk_factors": top_factors
-    }   
+    }
