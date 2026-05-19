@@ -151,9 +151,6 @@ def predict(data: PatientData):
     probability = calibrated_model.predict_proba(input_df)[0][1]
     risk_label = categorize_risk(probability)
 
-    print("Probability:", probability)
-    print("Is NaN:", np.isnan(probability))
-
     # =========================================
     # TRANSFORM INPUT
     # =========================================
@@ -213,9 +210,6 @@ def predict(data: PatientData):
     }
 
     logger.info(log_data)
-
-    print("Returned Probability:", round(float(probability), 4))
-    print("Returned Risk Label:", risk_label)
 
     return {
         "request_id": request_id,
