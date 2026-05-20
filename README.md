@@ -293,7 +293,7 @@ models/
 
 
 ## Project Structure
-
+```
 pathwayIQ/
 │
 ├── api/
@@ -351,7 +351,7 @@ pathwayIQ/
 ├── .gitignore
 └── README.md
 
----
+```
 
 ## API Reference
 
